@@ -22,3 +22,7 @@ Thumbs.db
 # Arquivos de configuração com informações sensíveis
 .env
 application-local.properties
+
+# Banco de dados H2
+**/*.mv.db
+**/*.trace.db
