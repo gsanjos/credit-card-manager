@@ -1,5 +1,6 @@
 package io.github.gsanjos.planeja.infra.handlers;
 
+import io.github.gsanjos.planeja.common.exceptions.RecordNotFoundException;
 import io.github.gsanjos.planeja.common.exceptions.ValidationException;
 import io.github.gsanjos.planeja.common.validation.CampoInvalido;
 import org.springframework.http.HttpStatus;
@@ -45,5 +46,17 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(status).body(body);
+    }
+
+    @ExceptionHandler(RecordNotFoundException.class)
+    public ResponseEntity<?> handleRecordNotFoundException(RecordNotFoundException e) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(Map.of(
+                        "timestamp", LocalDateTime.now(),
+                        "status", HttpStatus.NOT_FOUND.value(),
+                        "error", e.getMessage(),
+                        "message", e.getMessage()
+                ));
     }
 }
